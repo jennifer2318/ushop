@@ -9,7 +9,7 @@
 
     <title>EasyCms</title>
 
-    <script>
+    <script type="text/javascript">
         window.invivoment = {
             <?php
                 $paths = [
@@ -22,9 +22,16 @@
                 }
             ?>
         };
+
+        const config = {
+            js: [
+                {index: 0, url: 'http://ushop.loc/js/app.js', type: null},
+            ]
+        }
+
+        window.LoaderConfig = config;
+
     </script>
 
 </head>
 <body class="{{$bodyClassName ?? ''}}">
-<div id="root">
-</div>

@@ -9,7 +9,7 @@
 
 @prepend('scripts')
     <!-- Scripts -->
-    <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/loader.js')}}"></script>
 {{--    <script type="text/javascript" src="{{asset('js/jquery-3.5.1.min.js')}}"></script>--}}
 @endprepend
 
