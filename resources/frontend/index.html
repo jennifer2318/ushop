@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UShop</title>
+    <link rel="stylesheet" href="css/fontawesome/fontawesome.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="js/polyfill.js"></script>
+    <script src="js/app.js"></script>
+</head>
+<body style="height: 5000px;">
+
+    <header>
+
+        <div class="header header-main">
+            <div class="container-fluid container-accent">
+                <div class="container">
+                    <div class="header__top">
+                        <div class="header__social-block social-block blocks">
+                            <a href="#" class="social-block__link">
+                                <i class="fab fa-instagram social-block__icon"></i>
+                            </a>
+                            <a href="#" class="social-block__link">
+                                <i class="fab fa-facebook-f social-block__icon"></i>
+                            </a>
+                            <a href="#" class="social-block__link">
+                                <i class="fab fa-pinterest-p social-block__icon"></i>
+                            </a>
+                        </div>
+                        <div class="header__currency-block currency-block blocks">
+                            <div class="currency-block__selector selector" tabindex="-1">
+                                <div class="selector__head">
+                                    <input class="selector__field" type="text" name="select-currency">
+                                    <div class="selector__active">
+                                        RUB
+                                    </div>
+                                    <i class="fas fa-caret-down selector__icon"></i>
+                                </div>
+                                <div class="selector__options">
+                                    <div class="selector__body">
+                                        <div class="option">USD</div>
+                                        <div class="option">EUR</div>
+                                        <div class="option selected">RUB</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="header__region-block region-block blocks">
+                            <div class="region-block__selector selector" tabindex="-1">
+                                <div class="selector__head">
+                                    <input class="selector__field" type="text" name="select-currency">
+                                    <div class="selector__active">
+                                        Русский
+                                    </div>
+                                    <i class="fas fa-caret-down selector__icon"></i>
+                                </div>
+                                <div class="selector__options">
+                                    <div class="selector__body">
+                                        <div class="option selected">Русский</div>
+                                        <div class="option">English</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="container">
+                <div class="header__row">
+    
+                    <div class="header__logo-block logo-block blocks">
+                        <div class="logo-block__logo">
+                            <a href="/">
+                                <img src="img/logo.svg" alt="UShop" draggable="false">
+                            </a>
+                        </div>
+                    </div>
+    
+                    <div class="header__search-block search-block blocks">
+                        <div class="search__block-search search">
+                            <input class="search__input" type="text" name="search" placeholder="Поиск">
+                            <button class="search__button button" type="button">
+                                <i class="far fa-search search__button-icon"></i>
+                            </button>
+                        </div>
+                    </div>
+    
+                    <!-- <div class="header__phone-block phone-block blocks">
+                        <div class="phone-block__dropdown dropdown dropdown-noicon">
+                            <div class="dropdown__head">
+                                <span class="dropdown__head-icon">
+                                    <i class="fas fa-phone"></i>
+                                </span>
+                                <span class="dropdown__head-text">
+                                    <a href="tel:+70000000010">+7 (000) 000-00-10</a>
+                                </span>
+                                <i class="fas fa-caret-down dropdown__head-dropdown-icon"></i>
+                            </div>
+                            <div class="dropdown__wrap">
+                                <div class="dropdown__wrap-body wrap-body">
+                                    +7 (000) 000-00-10
+                                </div>
+                            </div>
+                        </div>
+                        <div class="phone-block__action">
+                            <button class="button callback-btn">заказать звонок</button>
+                        </div>
+                    </div> -->
+
+                    <!-- <div class="header__user-block user-block blocks">
+                        <div class="user-block__row">
+                            <div class="user-block__action user-action">
+                                <a class="button" href="#" title="Личный кабинет">
+                                    <i class="fal fa-user-circle button__icon user-action__icon"></i>
+                                    <span class="user-action__name">войти</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="header__count-block count-block blocks">
+                        <a href="#" class="count-block__row">
+                            <i class="fal fa-poll count-block__icon"></i>
+                            <span class="count-block__title" aria-hidden="true">
+                                Cравнение
+                            </span>
+                            <span class="count-block__count">
+                                0
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="header__count-block count-block blocks">
+                        <a href="#" class="count-block__row">
+                            <i class="fal fa-heart count-block__icon"></i>
+                            <span class="count-block__title" aria-hidden="true">
+                                Избранное
+                            </span>
+                            <span class="count-block__count">
+                                200
+                            </span>
+                        </a>
+                    </div>
+
+                    <div class="header__count-block count-block blocks">
+                        <a href="#" class="count-block__row">
+                            <i class="fal fa-shopping-cart count-block__icon"></i>
+                            <span class="count-block__title">
+                                Корзина
+                            </span>
+                            <span class="count-block__count">
+                                99
+                            </span>
+                        </a>
+                    </div>
+    
+                    <div class="header__user-block user-block blocks">
+                        
+                        <div class="user-block__row">
+                            <div class="user-block__action user-action">
+    
+                                    <div class="dropdown dropdown-noicon">
+                                        <div class="dropdown__head">
+                                            <span class="dropdown__head-text">
+                                                <a href="#" class="button">
+                                                    <i class="fal fa-user button__icon user-action__icon"></i>
+                                                    <span class="user-action__name">мой кабинет</span>
+                                                </a>
+                                            </span>
+                                            <i class="fas fa-caret-down dropdown__head-dropdown-icon"></i>
+                                        </div>
+                                        <div class="dropdown__wrap">
+                                            <div class="dropdown__wrap-body wrap-body">
+                                                <div class="dropdown__element"><a class="button" href="#"><i class="fal fa-user button__icon"></i>Мой кабинет</a></div>
+                                                <div class="dropdown__element"><a class="button" href="#"><i class="fal fa-luggage-cart button__icon"></i>Текущие заказы</a></div>
+                                                <div class="dropdown__element"><a class="button" href="#"><i class="fal fa-file-invoice-dollar button__icon"></i>Личный счет</a></div>
+                                                <div class="dropdown__element"><a class="button" href="#"><i class="fal fa-database button__icon"></i>Личные данные</a></div>
+                                                <div class="dropdown__element"><a class="button" href="#"><i class="fal fa-key button__icon"></i>Сменить пароль</a></div>
+                                                <div class="dropdown__element"><a class="button" href="#"><i class="fal fa-history button__icon"></i>История заказов</a></div>
+                                                <div class="dropdown__element"><a class="button" href="#"><i class="fal fa-user-chart button__icon"></i>Профили заказов</a></div>
+                                                <div class="dropdown__element"><a class="button" href="#"><i class="fal fa-shopping-cart button__icon"></i>Корзина</a></div>
+                                                <div class="dropdown__element"><a class="button" href="#"><i class="fal fa-address-book button__icon"></i>Контакты</a></div>
+                                                <div class="dropdown__element"><a class="button" href="#"><i class="fal fa-sign-out-alt button__icon"></i>Выйти</a></div>
+                                            </div>
+                                        </div>
+                                    </div>
+    
+                            </div>
+                        </div>
+                    </div>
+    
+                </div>
+            </div>
+        </div>
+
+        <div class="header">
+            <div class="header__fixed">
+                <div class="container">
+                    <div class="header__row">
+                        
+                        <div class="header__mobile-menu mobile-menu" js-popup="popup__main-menu">
+                            <div class="mobile-menu__icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div>
+
+                        <!-- <div class="header__mobile-menu mobile-menu">
+                            <div class="mobile-menu__icon">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                            </div>
+                        </div> -->
+    
+                        <div class="header__logo-block logo-block blocks">
+                            <div class="logo-block__logo">
+                                <a href="/">
+                                    <img src="img/logo.svg" alt="UShop" draggable="false">
+                                </a>
+                            </div>
+                        </div>
+        
+                        <div class="header__search-block search-block blocks">
+                            <div class="search__block-search search">
+                                <input class="search__input" type="text" name="search" placeholder="Поиск">
+                                <button class="search__button button" type="button">
+                                    <i class="far fa-search search__button-icon"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="header__count-block count-block blocks">
+                            <a href="#" class="count-block__row">
+                                <i class="fal fa-poll count-block__icon"></i>
+                                <span class="count-block__title" aria-hidden="true">
+                                    Cравнение
+                                </span>
+                                <span class="count-block__count">
+                                    0
+                                </span>
+                            </a>
+                        </div>
+
+                        <div class="header__count-block count-block blocks">
+                            <a href="#" class="count-block__row">
+                                <i class="fal fa-heart count-block__icon"></i>
+                                <span class="count-block__title" aria-hidden="true">
+                                    Избранное
+                                </span>
+                                <span class="count-block__count">
+                                    200
+                                </span>
+                            </a>
+                        </div>
+
+                        <div class="header__count-block count-block blocks">
+                            <a href="#" class="count-block__row">
+                                <i class="fal fa-shopping-cart count-block__icon"></i>
+                                <span class="count-block__title">
+                                    Корзина
+                                </span>
+                                <span class="count-block__count">
+                                    99
+                                </span>
+                            </a>
+                        </div>
+        
+                        <div class="header__user-block user-block blocks">
+                        
+                            <div class="user-block__row">
+                                <div class="user-block__action user-action">
+        
+                                        <div class="dropdown dropdown-noicon">
+                                            <div class="dropdown__head">
+                                                <span class="dropdown__head-text">
+                                                    <a href="#" class="button" title="Мой кабинет">
+                                                        <i class="fal fa-user button__icon user-action__icon"></i>
+                                                    </a>
+                                                </span>
+                                                <i class="fas fa-caret-down dropdown__head-dropdown-icon"></i>
+                                            </div>
+                    
+                                        </div>
+        
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </header>
+
+    <div class="popup-container">
+        <div class="popup-wrap">
+            
+            <div class="popup popup__main-menu" style="width: 500px;height: 500px;background: #fff;display: flex;">
+                g
+            </div>
+
+        </div>
+    </div>
+
+    <a class="scroll-to-top" href="#">
+        <i class="far fa-arrow-up"></i>
+    </a>
+    
+</body>
+</html>
