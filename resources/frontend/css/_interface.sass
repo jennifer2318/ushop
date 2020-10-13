@@ -272,3 +272,49 @@ a
     border-radius: 5px
     border: 0
     outline: none
+
+
+.slider
+    position: relative
+    .slider__prev, .slider__next
+        position: absolute
+        top: 50%
+        transform: translateY(-50%)
+        z-index: 6
+        text-shadow: none
+        background: #fff
+        border-radius: 3px
+        border: none
+        outline: none
+        text-transform: uppercase
+        text-decoration: none
+        transition: .3s ease
+        color: $globalColor
+        display: flex
+        align-items: center
+        appearance: none
+        padding: 10px 15px
+        &:hover
+            background: $accent
+            color: $white
+            cursor: pointer
+    .slider__prev
+        left: 20px
+        &-icon
+            margin-left: -2px
+    .slider__next
+        right: 20px
+        &-icon
+            margin-right: -2px
+    &__container
+        overflow: hidden
+        position: relative
+        display: flex
+    .slider-row
+        width: 100%
+        min-width: 100%
+        transition: transform .5s
+        z-index: 5
+        img
+            width: 100%
+            object-fit: contain

@@ -348,6 +348,177 @@ window.Popups = {
 
 };
 
+class Slider {
+    defaultConf = {
+        selector: '.slider',
+        selectorDom: null,
+        data: '.slider-row',
+        dataDom: null,
+    };
+    config;
+
+    constructor(conf) {
+        this.config = Object.assign(this.defaultConf, conf);
+        if (this.getDomElements()) {
+            this.init();
+            console.log(this.config);
+        }
+    }
+
+    getDomElements() {
+        const cfg = this.config;
+
+        if (cfg.selector !== null || typeof cfg.selector === "string") {
+            cfg.selectorDom = document.querySelector(cfg.selector);
+        }
+
+        if (cfg.selectorDom !== null || cfg.selectorDom !== undefined) {
+            switch (typeof cfg.data) {
+                case "string": {
+                    cfg.dataDom = document.querySelectorAll(cfg.data);
+
+                    return true;
+                }
+                case "object": {
+                    if (Array.isArray(cfg.data)) {
+                        cfg.dataDom = cfg.data;
+
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
+
+    init() {
+        const cfg = this.config;
+
+        cfg.positions = [];
+        cfg.active = 0;
+        cfg.activeDom = cfg.dataDom[0];
+
+        Array.prototype.forEach.call(cfg.dataDom, (v, k) => {
+            cfg.positions[k] = v.getBoundingClientRect().width * k;
+        });
+
+        cfg.activeDom.classList.add('active');
+
+        this.initButtons();
+        this.calculatePositions();
+        this.animateSlides();
+
+        this.initEvents();
+    }
+
+    initButtons() {
+        const cfg = this.config;
+
+        const prevBtn = document.createElement('button');
+        prevBtn.classList.add('slider__prev');
+        prevBtn.innerHTML = "<i class='slider__prev-icon far fa-chevron-left'></i>";
+
+        const nextBtn = document.createElement('button');
+        nextBtn.classList.add('slider__next');
+        nextBtn.innerHTML = "<i class='slider__next-icon far fa-chevron-right'></i>";
+
+        cfg.selectorDom.prepend(prevBtn);
+        cfg.selectorDom.append(nextBtn);
+
+        cfg.prevBtn = cfg.selectorDom.querySelector('.slider__prev');
+        cfg.nextBtn = cfg.selectorDom.querySelector('.slider__next');
+    }
+
+    prevSlider(e, _this) {
+        const cfg = _this.config;
+
+        if (cfg.active > 0) {
+            cfg.active = cfg.active - 1;
+            cfg.activeDom.classList.remove('active');
+            cfg.activeDom = cfg.dataDom[cfg.active];
+            cfg.activeDom.classList.add('active');
+
+            _this.calculatePositions();
+        }
+        _this.animateSlides();
+    }
+
+    nextSlider(e, _this) {
+        const cfg = _this.config;
+
+        if (cfg.active < cfg.dataDom.length-1) {
+            cfg.active = cfg.active + 1;
+            cfg.activeDom.classList.remove('active');
+            cfg.activeDom = cfg.dataDom[cfg.active];
+            cfg.activeDom.classList.add('active');
+
+            _this.calculatePositions();
+        }
+        _this.animateSlides();
+    }
+
+    initEvents() {
+        const cfg = this.config;
+
+        cfg.prevBtn.addEventListener('click', (e) => {
+            this.prevSlider(e, this);
+        });
+
+        cfg.nextBtn.addEventListener('click', (e) => {
+            this.nextSlider(e, this);
+        });
+
+        window.addEventListener('resize', (e) => {
+            this.onResize(e, this);
+        });
+    }
+
+    calculatePositions() {
+        const cfg = this.config;
+
+        const prevPositions = cfg.positions.slice(0, cfg.active);
+        const nextPositions = cfg.positions.slice(cfg.active);
+
+        const width = cfg.activeDom.getBoundingClientRect().width;
+
+        // let ln =  prevPositions.length;
+        // Array.prototype.forEach.call(prevPositions, (v, k) => {
+        //     prevPositions[k] = -(width * ln);
+        //     ln -= 1;
+        // });
+        //
+        // Array.prototype.forEach.call(nextPositions, (v, k) => {
+        //     nextPositions[k] = width * (k);
+        // });
+
+        Array.prototype.forEach.call(cfg.positions, (v, k) => {
+           cfg.positions[k] = -(width * cfg.active);
+        });
+
+        // let arr = [];
+        // arr = arr.concat(prevPositions, nextPositions);
+
+        // cfg.positions = arr;
+    }
+
+    animateSlides() {
+        const cfg = this.config;
+
+        Array.prototype.forEach.call(cfg.dataDom, (v, k) => {
+            v.style.transform = `translateX(${cfg.positions[k]}px)`;
+        });
+    }
+
+    onResize(e, _this) {
+        const cfg = _this.config;
+
+        _this.calculatePositions();
+        _this.animateSlides();
+    }
+
+}
+
 const fixedHeaderHandler = (e) => {
     const fixedHeader = document.querySelector('.header__fixed');
 
@@ -454,4 +625,8 @@ document.addEventListener('DOMContentLoaded', function() {
     Popups.init();
     Selectors.init();
     Dropdowns.init();
+
+    new Slider({
+
+    });
 });
