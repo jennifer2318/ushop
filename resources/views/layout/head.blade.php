@@ -27,7 +27,7 @@
             js: [
                 {index: 0, url: 'http://ushop.loc/js/app.js', type: null},
             ]
-        }
+        };
 
         window.LoaderConfig = config;
 
