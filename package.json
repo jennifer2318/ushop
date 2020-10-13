@@ -11,6 +11,7 @@
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
     },
     "devDependencies": {
+        "@babel/plugin-proposal-class-properties": "^7.10.4",
         "@babel/plugin-proposal-decorators": "^7.10.1",
         "@babel/plugin-proposal-nullish-coalescing-operator": "^7.10.1",
         "@babel/plugin-transform-member-expression-literals": "^7.10.1",
