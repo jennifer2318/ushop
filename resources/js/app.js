@@ -354,6 +354,8 @@ class Slider {
         selectorDom: null,
         data: '.slider-row',
         dataDom: null,
+        time: 8000,
+        auto: false,
     };
     config;
 
@@ -398,6 +400,8 @@ class Slider {
         cfg.positions = [];
         cfg.active = 0;
         cfg.activeDom = cfg.dataDom[0];
+        cfg.interval = -1;
+        cfg.isReverse = false;
 
         Array.prototype.forEach.call(cfg.dataDom, (v, k) => {
             cfg.positions[k] = v.getBoundingClientRect().width * k;
@@ -410,6 +414,33 @@ class Slider {
         this.animateSlides();
 
         this.initEvents();
+
+        this.interval();
+    }
+
+    interval() {
+        const cfg = this.config;
+
+        if (cfg.auto === true) {
+            clearInterval(cfg.interval);
+            cfg.interval = setInterval(() => {
+
+                if (cfg.active + 1 === cfg.dataDom.length) {
+                    cfg.isReverse = true;
+                }
+
+                if (cfg.active < cfg.dataDom.length-1 && !cfg.isReverse) {
+                    this.nextSlider(null, this);
+                }else {
+                    this.prevSlider(null, this);
+                }
+
+                if (cfg.active - 1 < 0) {
+                    cfg.isReverse = false;
+                }
+
+            }, cfg.time);
+        }
     }
 
     initButtons() {
@@ -433,6 +464,7 @@ class Slider {
     prevSlider(e, _this) {
         const cfg = _this.config;
 
+        _this.interval();
         if (cfg.active > 0) {
             cfg.active = cfg.active - 1;
             cfg.activeDom.classList.remove('active');
@@ -447,6 +479,7 @@ class Slider {
     nextSlider(e, _this) {
         const cfg = _this.config;
 
+        _this.interval();
         if (cfg.active < cfg.dataDom.length-1) {
             cfg.active = cfg.active + 1;
             cfg.activeDom.classList.remove('active');
@@ -627,6 +660,63 @@ document.addEventListener('DOMContentLoaded', function() {
     Dropdowns.init();
 
     new Slider({
-
+        auto: true,
     });
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+    let lazyIframes = [].slice.call(document.querySelectorAll("iframe.lazy"));
+    let active = false;
+
+    const lazyLoad = function() {
+        if (active === false) {
+            active = true;
+
+            setTimeout(function() {
+                lazyImages.forEach(function(lazyImage) {
+                    if ((lazyImage.getBoundingClientRect().top <= window.innerHeight && lazyImage.getBoundingClientRect().bottom >= 0) && getComputedStyle(lazyImage).display !== "none") {
+                        lazyImage.src = lazyImage.dataset.src;
+                        lazyImage.srcset = lazyImage.dataset.srcset;
+                        lazyImage.classList.remove("lazy");
+
+                        lazyImages = lazyImages.filter(function(image) {
+                            return image !== lazyImage;
+                        });
+
+                        if (lazyImages.length === 0) {
+                            document.removeEventListener("scroll", lazyLoad);
+                            window.removeEventListener("resize", lazyLoad);
+                            window.removeEventListener("orientationchange", lazyLoad);
+                        }
+                    }
+                });
+
+                lazyIframes.forEach(function(lazyFrame) {
+                    if ((lazyFrame.getBoundingClientRect().top <= window.innerHeight && lazyFrame.getBoundingClientRect().bottom >= 0) && getComputedStyle(lazyFrame).display !== "none") {
+                        lazyFrame.src = lazyFrame.dataset.src;
+                        lazyFrame.classList.remove("lazy");
+
+                        lazyFrame = lazyFrame.filter(function(iframe) {
+                            return iframe !== lazyFrame;
+                        });
+
+                    }
+                });
+
+                if (lazyIframes.length === 0 && lazyImages.length === 0) {
+                    document.removeEventListener("scroll", lazyLoad);
+                    window.removeEventListener("resize", lazyLoad);
+                    window.removeEventListener("orientationchange", lazyLoad);
+                }
+
+                active = false;
+            }, 200);
+        }
+    };
+
+    document.addEventListener("scroll", lazyLoad);
+    window.addEventListener("resize", lazyLoad);
+    window.addEventListener("orientationchange", lazyLoad);
+    lazyLoad();
 });
