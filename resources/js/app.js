@@ -352,6 +352,7 @@ class Slider {
     defaultConf = {
         selector: '.slider',
         selectorDom: null,
+        containerDom: null,
         data: '.slider-row',
         dataDom: null,
         time: 8000,
@@ -374,10 +375,12 @@ class Slider {
             cfg.selectorDom = document.querySelector(cfg.selector);
         }
 
-        if (cfg.selectorDom !== null || cfg.selectorDom !== undefined) {
+        cfg.containerDom = cfg.selectorDom.querySelector('.slider__container');
+
+        if (cfg.selectorDom !== null || cfg.selectorDom !== undefined || cfg.containerDom !== undefined || cfg.containerDom !== null) {
             switch (typeof cfg.data) {
                 case "string": {
-                    cfg.dataDom = document.querySelectorAll(cfg.data);
+                    cfg.dataDom = cfg.selectorDom.querySelectorAll(cfg.data);
 
                     return true;
                 }
@@ -402,10 +405,14 @@ class Slider {
         cfg.activeDom = cfg.dataDom[0];
         cfg.interval = -1;
         cfg.isReverse = false;
+        cfg.posX1 = 0;
+        cfg.posInit = 0;
 
-        Array.prototype.forEach.call(cfg.dataDom, (v, k) => {
-            cfg.positions[k] = v.getBoundingClientRect().width * k;
-        });
+        const width = cfg.activeDom.getBoundingClientRect().width;
+
+        cfg.width = width;
+        cfg.posThreshold = width * 0.15;
+        cfg.containerDom.style.transform = `translate3d(-${width * cfg.active}, 0px, 0px)`;
 
         cfg.activeDom.classList.add('active');
 
@@ -459,6 +466,15 @@ class Slider {
 
         cfg.prevBtn = cfg.selectorDom.querySelector('.slider__prev');
         cfg.nextBtn = cfg.selectorDom.querySelector('.slider__next');
+
+        this.buttonsState();
+    }
+
+    buttonsState() {
+        const cfg = this.config;
+
+        cfg.prevBtn.classList.toggle('disabled', cfg.active === 0);
+        cfg.nextBtn.classList.toggle('disabled', cfg.active === --cfg.dataDom.length);
     }
 
     prevSlider(e, _this) {
@@ -474,6 +490,7 @@ class Slider {
             _this.calculatePositions();
         }
         _this.animateSlides();
+        _this.buttonsState();
     }
 
     nextSlider(e, _this) {
@@ -489,20 +506,103 @@ class Slider {
             _this.calculatePositions();
         }
         _this.animateSlides();
+        _this.buttonsState();
     }
+
+    getEvent(e) {
+        return e.type.search('touch') !== -1 ? e.touches[0] : e;
+    }
+
+    swipeAction(e, _this) {
+        const cfg = _this.config;
+
+        let evt = _this.getEvent(e);
+
+        _this.interval();
+
+        cfg.posX2 = cfg.posX1 - evt.clientX;
+        cfg.posX1 = evt.clientX;
+
+        let transform = +cfg.containerDom.style.transform.match(/[-0-9.]+(?=px)/)[0];
+
+        const pos2 = cfg.posX2 <= 0;
+
+        if (pos2) {
+            cfg.containerDom.style.transform = `translate3d(${transform + -cfg.posX2}px, 0px, 0px)`;
+        }else {
+            cfg.containerDom.style.transform = `translate3d(${transform - cfg.posX2}px, 0px, 0px)`;
+        }
+
+        if (transform > 400 || transform < (cfg.positions[cfg.positions.length-1] + -400)) {
+            _this.animateSlides();
+        }
+    }
+
+    swipeEnd(e, _this) {
+        const cfg = _this.config;
+
+        cfg.containerDom.removeEventListener('touchmove', _this.touchmoveHandler);
+        cfg.containerDom.removeEventListener('mousemove', _this.touchmoveHandler);
+
+        cfg.containerDom.removeEventListener('touchend', _this.touchendHandler);
+        cfg.containerDom.removeEventListener('mouseup', _this.touchendHandler);
+
+        const posFinal = cfg.posInit - cfg.posX1;
+
+        if (Math.abs(posFinal) > cfg.posThreshold) {
+            if (cfg.posInit < cfg.posX1) {
+                _this.prevSlider(null, _this);
+            }else if (cfg.posInit > cfg.posX1) {
+                _this.nextSlider(null, _this);
+            }
+        }
+
+        if (cfg.posInit !== cfg.posX1) {
+            _this.animateSlides();
+        }
+    }
+
+    swipeStart(e, _this) {
+        const cfg = _this.config;
+
+        let evt = _this.getEvent(e);
+
+        cfg.posInit = cfg.posX1 = evt.clientX;
+
+        cfg.containerDom.addEventListener('touchmove', _this.touchmoveHandler, {passive: true});
+        cfg.containerDom.addEventListener('mousemove', _this.touchmoveHandler, {passive: true});
+
+        cfg.containerDom.addEventListener('touchend', _this.touchendHandler);
+        cfg.containerDom.addEventListener('mouseup', _this.touchendHandler);
+    }
+
+    touchmoveHandler = e => {
+        this.swipeAction(e, this);
+    };
+
+    touchstartHandler = e => {
+        this.swipeStart(e, this);
+    };
+
+    touchendHandler = e => {
+        this.swipeEnd(e, this);
+    };
 
     initEvents() {
         const cfg = this.config;
 
-        cfg.prevBtn.addEventListener('click', (e) => {
+        cfg.prevBtn.addEventListener('click', e => {
             this.prevSlider(e, this);
         });
 
-        cfg.nextBtn.addEventListener('click', (e) => {
+        cfg.nextBtn.addEventListener('click', e => {
             this.nextSlider(e, this);
         });
 
-        window.addEventListener('resize', (e) => {
+        cfg.containerDom.addEventListener('touchstart', this.touchstartHandler);
+        cfg.containerDom.addEventListener('mousedown', this.touchstartHandler);
+
+        window.addEventListener('resize', e => {
             this.onResize(e, this);
         });
     }
@@ -510,37 +610,17 @@ class Slider {
     calculatePositions() {
         const cfg = this.config;
 
-        const prevPositions = cfg.positions.slice(0, cfg.active);
-        const nextPositions = cfg.positions.slice(cfg.active);
-
         const width = cfg.activeDom.getBoundingClientRect().width;
 
-        // let ln =  prevPositions.length;
-        // Array.prototype.forEach.call(prevPositions, (v, k) => {
-        //     prevPositions[k] = -(width * ln);
-        //     ln -= 1;
-        // });
-        //
-        // Array.prototype.forEach.call(nextPositions, (v, k) => {
-        //     nextPositions[k] = width * (k);
-        // });
-
-        Array.prototype.forEach.call(cfg.positions, (v, k) => {
-           cfg.positions[k] = -(width * cfg.active);
+        Array.prototype.forEach.call(cfg.dataDom, (v, k) => {
+           cfg.positions[k] = -(width * k);
         });
-
-        // let arr = [];
-        // arr = arr.concat(prevPositions, nextPositions);
-
-        // cfg.positions = arr;
     }
 
     animateSlides() {
         const cfg = this.config;
 
-        Array.prototype.forEach.call(cfg.dataDom, (v, k) => {
-            v.style.transform = `translateX(${cfg.positions[k]}px)`;
-        });
+        cfg.containerDom.style.transform = `translate3d(${cfg.positions[cfg.active]}px, 0px, 0px)`;
     }
 
     onResize(e, _this) {

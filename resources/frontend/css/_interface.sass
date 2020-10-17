@@ -278,6 +278,10 @@ a
 
 .slider
     position: relative
+    overflow: hidden
+    user-select: none
+    img
+        pointer-events: none
     .slider__prev, .slider__next
         position: absolute
         top: 50%
@@ -308,14 +312,16 @@ a
         right: 20px
         &-icon
             margin-right: -2px
+    .slider__prev.disabled, .slider__next.disabled
+        opacity: 0.45
+        pointer-events: none
     &__container
-        overflow: hidden
         position: relative
         display: flex
+        transition: transform .5s
     .slider-row
         width: 100%
         min-width: 100%
-        transition: transform .5s
         z-index: 5
         img
             width: 100%
