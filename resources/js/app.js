@@ -375,7 +375,9 @@ class Slider {
             cfg.selectorDom = document.querySelector(cfg.selector);
         }
 
-        if (cfg.selectorDom !== null && cfg.selectorDom !== undefined && cfg.containerDom !== undefined && cfg.containerDom !== null) {
+        if (cfg.selectorDom !== null && cfg.selectorDom !== undefined) {
+
+            if (cfg.containerDom === undefined && cfg.containerDom === null) return false;
 
             cfg.containerDom = cfg.selectorDom.querySelector('.slider__container');
 
@@ -799,7 +801,6 @@ document.addEventListener('DOMContentLoaded', function() {
     Dropdowns.init();
 
     new Slider({
-        selector: '.das',
         auto: true,
         dots: true,
     });
