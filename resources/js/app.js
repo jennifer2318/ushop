@@ -375,9 +375,10 @@ class Slider {
             cfg.selectorDom = document.querySelector(cfg.selector);
         }
 
-        cfg.containerDom = cfg.selectorDom.querySelector('.slider__container');
+        if (cfg.selectorDom !== null && cfg.selectorDom !== undefined && cfg.containerDom !== undefined && cfg.containerDom !== null) {
 
-        if (cfg.selectorDom !== null || cfg.selectorDom !== undefined || cfg.containerDom !== undefined || cfg.containerDom !== null) {
+            cfg.containerDom = cfg.selectorDom.querySelector('.slider__container');
+
             switch (typeof cfg.data) {
                 case "string": {
                     cfg.dataDom = cfg.selectorDom.querySelectorAll(cfg.data);
@@ -798,6 +799,7 @@ document.addEventListener('DOMContentLoaded', function() {
     Dropdowns.init();
 
     new Slider({
+        selector: '.das',
         auto: true,
         dots: true,
     });
