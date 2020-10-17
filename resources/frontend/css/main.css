@@ -1077,7 +1077,7 @@ a:hover {
   padding: 4px;
   margin: 0 4px;
   border-radius: 50%;
-  background: var(--color-white);
+  background: var(--ui-color-grey);
   -webkit-transition: .3s ease;
   transition: .3s ease;
 }

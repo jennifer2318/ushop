@@ -688,7 +688,6 @@ class Slider {
         _this.calculatePositions();
         _this.animateSlides();
     }
-
 }
 
 const fixedHeaderHandler = (e) => {
