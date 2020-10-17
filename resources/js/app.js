@@ -357,6 +357,7 @@ class Slider {
         dataDom: null,
         time: 8000,
         auto: false,
+        dots: false,
     };
     config;
 
@@ -364,7 +365,6 @@ class Slider {
         this.config = Object.assign(this.defaultConf, conf);
         if (this.getDomElements()) {
             this.init();
-            console.log(this.config);
         }
     }
 
@@ -417,6 +417,7 @@ class Slider {
         cfg.activeDom.classList.add('active');
 
         this.initButtons();
+        this.dotsInit();
         this.calculatePositions();
         this.animateSlides();
 
@@ -470,6 +471,60 @@ class Slider {
         this.buttonsState();
     }
 
+    dotsInit() {
+        const cfg = this.config;
+
+        if (cfg.dots === true) {
+            const dotsContainer = document.createElement('div');
+            dotsContainer.classList.add('slider__dots');
+
+            cfg.selectorDom.append(dotsContainer);
+
+            cfg.dotsDom = cfg.selectorDom.querySelector('.slider__dots');
+
+            cfg.dotsDataDom = [];
+            Array.prototype.forEach.call(cfg.dataDom, (v, k) => {
+                const dot = document.createElement('span');
+                dot.classList.add('slider__dots-dot');
+                if (cfg.active === k) {
+                    dot.classList.add('active');
+                }
+                cfg.dotsDom.append(dot);
+
+                const dotDom = cfg.dotsDom.querySelectorAll('.slider__dots-dot')[k];
+
+                cfg.dotsDataDom[k] = dotDom;
+
+                dotDom.addEventListener('click', e => {
+                    this.dotAction(e, this, k);
+                });
+            });
+
+        }
+    }
+
+    dotAction(e, _this, k) {
+        const cfg = _this.config;
+
+        cfg.last = cfg.active;
+        cfg.active = k;
+        cfg.activeDom = cfg.dataDom[cfg.active];
+
+        cfg.dataDom[cfg.last].classList.remove('active');
+
+        _this.interval();
+        _this.animateSlides();
+        _this.buttonsState();
+        _this.dotsState();
+    }
+
+    dotsState() {
+        const cfg = this.config;
+
+        cfg.dotsDataDom[cfg.last].classList.remove('active');
+        cfg.dotsDataDom[cfg.active].classList.add('active');
+    }
+
     buttonsState() {
         const cfg = this.config;
 
@@ -482,6 +537,7 @@ class Slider {
 
         _this.interval();
         if (cfg.active > 0) {
+            cfg.last = cfg.active;
             cfg.active = cfg.active - 1;
             cfg.activeDom.classList.remove('active');
             cfg.activeDom = cfg.dataDom[cfg.active];
@@ -491,6 +547,7 @@ class Slider {
         }
         _this.animateSlides();
         _this.buttonsState();
+        _this.dotsState();
     }
 
     nextSlider(e, _this) {
@@ -498,6 +555,7 @@ class Slider {
 
         _this.interval();
         if (cfg.active < cfg.dataDom.length-1) {
+            cfg.last = cfg.active;
             cfg.active = cfg.active + 1;
             cfg.activeDom.classList.remove('active');
             cfg.activeDom = cfg.dataDom[cfg.active];
@@ -507,6 +565,7 @@ class Slider {
         }
         _this.animateSlides();
         _this.buttonsState();
+        _this.dotsState();
     }
 
     getEvent(e) {
@@ -572,8 +631,8 @@ class Slider {
         cfg.containerDom.addEventListener('touchmove', _this.touchmoveHandler, {passive: true});
         cfg.containerDom.addEventListener('mousemove', _this.touchmoveHandler, {passive: true});
 
-        cfg.containerDom.addEventListener('touchend', _this.touchendHandler);
-        cfg.containerDom.addEventListener('mouseup', _this.touchendHandler);
+        cfg.containerDom.addEventListener('touchend', _this.touchendHandler, {passive: true});
+        cfg.containerDom.addEventListener('mouseup', _this.touchendHandler, {passive: true});
     }
 
     touchmoveHandler = e => {
@@ -599,8 +658,8 @@ class Slider {
             this.nextSlider(e, this);
         });
 
-        cfg.containerDom.addEventListener('touchstart', this.touchstartHandler);
-        cfg.containerDom.addEventListener('mousedown', this.touchstartHandler);
+        cfg.containerDom.addEventListener('touchstart', this.touchstartHandler, {passive: true});
+        cfg.containerDom.addEventListener('mousedown', this.touchstartHandler, {passive: true});
 
         window.addEventListener('resize', e => {
             this.onResize(e, this);
@@ -741,6 +800,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     new Slider({
         auto: true,
+        dots: true,
     });
 });
 

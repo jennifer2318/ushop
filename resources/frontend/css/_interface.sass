@@ -288,7 +288,7 @@ a
         transform: translateY(-50%)
         z-index: 6
         text-shadow: none
-        background: #fff
+        background: $white
         border-radius: 3px
         border: none
         outline: none
@@ -319,6 +319,25 @@ a
         position: relative
         display: flex
         transition: transform .5s
+    &__dots
+        position: absolute
+        bottom: 40px
+        left: 50%
+        transform: translateX(-50%)
+        z-index: 6
+        display: flex
+        &-dot.active
+            background: $accent
+        &-dot
+            width: 6px
+            height: 6px
+            padding: 4px
+            margin: 0 4px
+            border-radius: 50%
+            background: $white
+            transition: .3s ease
+            &:hover
+                cursor: pointer
     .slider-row
         width: 100%
         min-width: 100%

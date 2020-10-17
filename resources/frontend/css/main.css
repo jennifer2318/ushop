@@ -996,7 +996,7 @@ a:hover {
           transform: translateY(-50%);
   z-index: 6;
   text-shadow: none;
-  background: #fff;
+  background: var(--color-white);
   border-radius: 3px;
   border: none;
   outline: none;
@@ -1053,6 +1053,37 @@ a:hover {
   transition: -webkit-transform .5s;
   transition: transform .5s;
   transition: transform .5s, -webkit-transform .5s;
+}
+
+.slider__dots {
+  position: absolute;
+  bottom: 40px;
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+  z-index: 6;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.slider__dots-dot.active {
+  background: var(--color-accent);
+}
+
+.slider__dots-dot {
+  width: 6px;
+  height: 6px;
+  padding: 4px;
+  margin: 0 4px;
+  border-radius: 50%;
+  background: var(--color-white);
+  -webkit-transition: .3s ease;
+  transition: .3s ease;
+}
+
+.slider__dots-dot:hover {
+  cursor: pointer;
 }
 
 .slider .slider-row {
