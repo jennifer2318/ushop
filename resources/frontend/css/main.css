@@ -1113,7 +1113,7 @@ a:hover {
 }
 
 .btn-catalog {
-  font-size: 12px;
+  font-size: 11px;
   padding: 8px 25px;
 }
 
@@ -1293,7 +1293,7 @@ a:hover {
 
 .banner {
   background-repeat: no-repeat;
-  background-size: 100%;
+  background-size: cover;
   background-position: center center;
 }
 
@@ -1335,7 +1335,9 @@ a:hover {
 }
 
 .banner__image {
-  margin-bottom: -10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .banner__image img {
@@ -1383,6 +1385,8 @@ a:hover {
   font-size: 11px;
   text-transform: uppercase;
   margin-bottom: 8px;
+  margin-top: 80px;
+  color: var(--color-grey-dark);
 }
 
 .banner .action-event__content {
@@ -1393,5 +1397,21 @@ a:hover {
 
 .banner .action-event__action {
   margin-top: 15px;
+  margin-bottom: 80px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.banner .action-event__action .button:not(:first-child) {
+  margin: 0 15px;
+}
+
+.banner-main .banner__image img {
+  padding-top: 120px;
+}
+
+.main-page-slider .slider__dots {
+  left: 25%;
 }
 /*# sourceMappingURL=main.css.map */
