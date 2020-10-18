@@ -8,12 +8,14 @@
     display: flex
     align-items: center
     appearance: none
+    border-radius: 3px
     &:hover
         color: $accent
         cursor: pointer
     &__icon
         margin-right: 10px
         font-size: 16px
+
 
 .callback-btn
     color: $accent
@@ -250,7 +252,7 @@ a
 .popup-container
     width: 100%
     height: 100vh
-    background: rgba(0,0,0,.25)
+    background: rgba(0,0,0,.45)
     z-index: 210
     position: fixed
     left: 0
@@ -300,6 +302,7 @@ a
         align-items: center
         appearance: none
         padding: 10px 15px
+        box-shadow: 0 0px 8px rgba(0, 0, 0, 0.136)
         &:hover
             background: $accent
             color: $white
@@ -342,6 +345,18 @@ a
         width: 100%
         min-width: 100%
         z-index: 5
+        overflow: hidden
         img
             width: 100%
             object-fit: contain
+
+.btn-accent
+    background: $accent
+    color: $white
+    padding: 8px 15px
+    &:hover, &:visited, &:focus
+        color: $white
+
+.btn-catalog
+    font-size: 12px
+    padding: 8px 25px
