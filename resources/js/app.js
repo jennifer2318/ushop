@@ -809,6 +809,7 @@ document.addEventListener('DOMContentLoaded', function() {
 document.addEventListener("DOMContentLoaded", function() {
     let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
     let lazyIframes = [].slice.call(document.querySelectorAll("iframe.lazy"));
+    let lazyBackgrounds = [].slice.call(document.querySelectorAll(".lazy-background"));
     let active = false;
 
     const lazyLoad = function() {
@@ -821,16 +822,6 @@ document.addEventListener("DOMContentLoaded", function() {
                         lazyImage.src = lazyImage.dataset.src;
                         lazyImage.srcset = lazyImage.dataset.srcset;
                         lazyImage.classList.remove("lazy");
-
-                        lazyImages = lazyImages.filter(function(image) {
-                            return image !== lazyImage;
-                        });
-
-                        if (lazyImages.length === 0) {
-                            document.removeEventListener("scroll", lazyLoad);
-                            window.removeEventListener("resize", lazyLoad);
-                            window.removeEventListener("orientationchange", lazyLoad);
-                        }
                     }
                 });
 
@@ -838,15 +829,17 @@ document.addEventListener("DOMContentLoaded", function() {
                     if ((lazyFrame.getBoundingClientRect().top <= window.innerHeight && lazyFrame.getBoundingClientRect().bottom >= 0) && getComputedStyle(lazyFrame).display !== "none") {
                         lazyFrame.src = lazyFrame.dataset.src;
                         lazyFrame.classList.remove("lazy");
-
-                        lazyFrame = lazyFrame.filter(function(iframe) {
-                            return iframe !== lazyFrame;
-                        });
-
                     }
                 });
 
-                if (lazyIframes.length === 0 && lazyImages.length === 0) {
+                lazyBackgrounds.forEach(function(lazyBackground) {
+                    if ((lazyBackground.getBoundingClientRect().top <= window.innerHeight && lazyBackground.getBoundingClientRect().bottom >= 0) && getComputedStyle(lazyBackground).display !== "none") {
+                        lazyBackground.style.backgroundImage = `url('${lazyBackground.dataset.src}')`;
+                        lazyBackground.classList.remove("lazy-background");
+                    }
+                });
+
+                if (lazyIframes.length === 0 && lazyImages.length === 0 && lazyBackgrounds.length === 0) {
                     document.removeEventListener("scroll", lazyLoad);
                     window.removeEventListener("resize", lazyLoad);
                     window.removeEventListener("orientationchange", lazyLoad);
