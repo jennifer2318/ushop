@@ -255,10 +255,10 @@ window.Popups = {
     open: (v, popup) => {
         const Self = window.Popups;
 
-        const isVisibilitySupport = document.body.style.hasOwnProperty('visibility');
+        const isVisibilitySupport = document.body.style.hasOwnProperty('content-visibility');
 
         if (isVisibilitySupport) {
-            Self.popupContainer.style.visibility = 'visible';
+            Self.popupContainer.style.contentVisibility = 'visible';
         }else {
             Self.popupContainer.style.display = 'block';
         }
@@ -286,10 +286,10 @@ window.Popups = {
     close: () => {
         const Self = window.Popups;
 
-        const isVisibilitySupport = document.body.style.hasOwnProperty('visibility');
+        const isVisibilitySupport = document.body.style.hasOwnProperty('content-visibility');
 
         if (isVisibilitySupport) {
-            Self.popupContainer.style.visibility = 'hidden';
+            Self.popupContainer.style.contentVisibility = 'hidden';
         }else {
             Self.popupContainer.style.display = 'none';
         }
@@ -358,6 +358,7 @@ class Slider {
         time: 8000,
         auto: false,
         dots: false,
+        type: 'slide',
     };
     config;
 
@@ -410,12 +411,34 @@ class Slider {
         cfg.isReverse = false;
         cfg.posX1 = 0;
         cfg.posInit = 0;
+        cfg.last = -1;
+        cfg.animId1 = -1;
 
         const width = cfg.activeDom.getBoundingClientRect().width;
+        const height = cfg.activeDom.getBoundingClientRect().height;
 
         cfg.width = width;
         cfg.posThreshold = width * 0.15;
-        cfg.containerDom.style.transform = `translate3d(-${width * cfg.active}, 0px, 0px)`;
+
+        switch (cfg.type) {
+            case 'opacity' : {
+                Array.prototype.forEach.call(cfg.dataDom, (v, k) => {
+
+                    cfg.dataDom[k].style.opacity = 0;
+                    cfg.dataDom[k].style.position = 'absolute';
+                    cfg.dataDom[k].style.left = 0;
+                    cfg.dataDom[k].style.top = 0;
+
+                    if (cfg.active === k) {
+                        cfg.dataDom[k].style.opacity = 1;
+                        cfg.dataDom[k].style.position = 'relative';
+                    }
+                });
+            } break;
+            default: {
+                cfg.containerDom.style.transform = `translate3d(-${width * cfg.active}, 0px, 0px)`;
+            }
+        }
 
         cfg.activeDom.classList.add('active');
 
@@ -539,6 +562,11 @@ class Slider {
         const cfg = _this.config;
 
         _this.interval();
+
+        if (cfg.type === 'opacity') {
+            clearTimeout(cfg.animId1);
+        }
+
         if (cfg.active > 0) {
             cfg.last = cfg.active;
             cfg.active = cfg.active - 1;
@@ -557,6 +585,11 @@ class Slider {
         const cfg = _this.config;
 
         _this.interval();
+
+        if (cfg.type === 'opacity') {
+            clearTimeout(cfg.animId1);
+        }
+
         if (cfg.active < cfg.dataDom.length-1) {
             cfg.last = cfg.active;
             cfg.active = cfg.active + 1;
@@ -585,18 +618,23 @@ class Slider {
         cfg.posX2 = cfg.posX1 - evt.clientX;
         cfg.posX1 = evt.clientX;
 
-        let transform = +cfg.containerDom.style.transform.match(/[-0-9.]+(?=px)/)[0];
+        switch (cfg.type) {
+            case 'opacity' : break;
+            default: {
+                let transform = +cfg.containerDom.style.transform.match(/[-0-9.]+(?=px)/)[0];
 
-        const pos2 = cfg.posX2 <= 0;
+                const pos2 = cfg.posX2 <= 0;
 
-        if (pos2) {
-            cfg.containerDom.style.transform = `translate3d(${transform + -cfg.posX2}px, 0px, 0px)`;
-        }else {
-            cfg.containerDom.style.transform = `translate3d(${transform - cfg.posX2}px, 0px, 0px)`;
-        }
+                if (pos2) {
+                    cfg.containerDom.style.transform = `translate3d(${transform + -cfg.posX2}px, 0px, 0px)`;
+                }else {
+                    cfg.containerDom.style.transform = `translate3d(${transform - cfg.posX2}px, 0px, 0px)`;
+                }
 
-        if (transform > 400 || transform < (cfg.positions[cfg.positions.length-1] + -400)) {
-            _this.animateSlides();
+                if (transform > 400 || transform < (cfg.positions[cfg.positions.length-1] + -400)) {
+                    _this.animateSlides();
+                }
+            }
         }
     }
 
@@ -674,15 +712,44 @@ class Slider {
 
         const width = cfg.activeDom.getBoundingClientRect().width;
 
-        Array.prototype.forEach.call(cfg.dataDom, (v, k) => {
-           cfg.positions[k] = -(width * k);
-        });
+        switch (cfg.type) {
+            case 'opacity' : break;
+            default: {
+                Array.prototype.forEach.call(cfg.dataDom, (v, k) => {
+                    cfg.positions[k] = -(width * k);
+                });
+            }
+        }
+
     }
 
     animateSlides() {
         const cfg = this.config;
 
-        cfg.containerDom.style.transform = `translate3d(${cfg.positions[cfg.active]}px, 0px, 0px)`;
+        switch (cfg.type) {
+            case 'opacity' : {
+
+                Array.prototype.forEach.call(cfg.dataDom, (v, k) => {
+                   if (k !== cfg.last && k !== cfg.active) {
+
+                       cfg.dataDom[k].style.opacity = 0;
+                       cfg.dataDom[k].style.position = 'absolute';
+                   }
+                });
+
+                if (cfg.last !== -1) {
+                    cfg.dataDom[cfg.active].style.position = 'relative';
+                    cfg.dataDom[cfg.last].style.position = 'absolute';
+
+                    cfg.dataDom[cfg.active].style.opacity = 1;
+
+                    cfg.animId1 = setTimeout(() => {
+                        cfg.dataDom[cfg.last].style.opacity = 0;
+                    }, 225);
+                }
+            } break;
+            default: cfg.containerDom.style.transform = `translate3d(${cfg.positions[cfg.active]}px, 0px, 0px)`;
+        }
     }
 
     onResize(e, _this) {
@@ -725,7 +792,7 @@ scrollEvents.scrollToTop = ({handler: scrollToTopHandler, name: 'scrollToTop'});
 
 const resizeFixedHeaderHandler = (e) => {
 
-    const isVisibilitySupport = document.body.style.hasOwnProperty('visibility');
+    const isVisibilitySupport = document.body.style.hasOwnProperty('content-visibility');
 
     if(window.innerWidth <= 991) {
         const fixedHeader = document.querySelector('.header__fixed');
@@ -735,9 +802,9 @@ const resizeFixedHeaderHandler = (e) => {
         }
         if(headerMain) {
             if (isVisibilitySupport) {
-                headerMain.style.visibility = 'hidden';
+                headerMain.style.contentVisibility = 'hidden';
             }else {
-                // headerMain.style.display = 'none';
+                headerMain.style.display = 'none';
             }
         }
         delete scrollEvents['fixedHeader'];
@@ -745,7 +812,7 @@ const resizeFixedHeaderHandler = (e) => {
         const headerMain = document.querySelector('.header-main');
         if(headerMain) {
             if (isVisibilitySupport) {
-                headerMain.style.visibility = 'visible';
+                headerMain.style.contentVisibility = 'visible';
             }else {
                 headerMain.style.display = 'block';
             }
@@ -758,7 +825,7 @@ resizeEvents.fixedHeader = {handler : resizeFixedHeaderHandler, name: 'fixedHead
 
 document.addEventListener('DOMContentLoaded', function() {
 
-    const isVisibilitySupport = document.body.style.hasOwnProperty('visibility');
+    const isVisibilitySupport = document.body.style.hasOwnProperty('content-visibility');
 
     window.onscroll = (e) => {
         Object.values(scrollEvents).forEach( event => {
@@ -803,6 +870,7 @@ document.addEventListener('DOMContentLoaded', function() {
     new Slider({
         auto: true,
         dots: true,
+        type: 'opacity',
     });
 });
 
