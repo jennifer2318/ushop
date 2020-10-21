@@ -259,8 +259,6 @@ window.Popups = {
 
         if (isVisibilitySupport) {
             Self.popupContainer.style.contentVisibility = 'visible';
-        }else {
-            Self.popupContainer.style.display = 'block';
         }
 
         Self.popupContainer.style.display = 'block';
@@ -290,9 +288,9 @@ window.Popups = {
 
         if (isVisibilitySupport) {
             Self.popupContainer.style.contentVisibility = 'hidden';
-        }else {
-            Self.popupContainer.style.display = 'none';
         }
+
+        Self.popupContainer.style.display = 'none';
         Self.popupContainer.style.opacity = 0;
 
         if (Self.activePopup !== null) {
