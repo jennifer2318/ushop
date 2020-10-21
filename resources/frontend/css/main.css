@@ -1134,7 +1134,7 @@ a:hover {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  padding-bottom: 20px;
+  padding-bottom: 0;
   padding-top: 10px;
   -webkit-box-pack: justify;
       -ms-flex-pack: justify;
@@ -1303,6 +1303,8 @@ a:hover {
 .section-slider {
   padding-top: 0;
   padding-bottom: 0;
+  border-top: 1px solid #f2f2f2;
+  border-bottom: 1px solid #f2f2f2;
 }
 
 .banner {
@@ -1462,6 +1464,7 @@ a:hover {
       -ms-flex: 1 1 auto;
           flex: 1 1 auto;
   width: calc(25% - 95px);
+  padding: 0 10px;
   margin: 10px;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
@@ -1488,5 +1491,60 @@ a:hover {
 .items .item__description {
   line-height: 23px;
   font-size: 13px;
+}
+
+.main-menu-section {
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.menu__container {
+  padding: 0;
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.menu__element {
+  list-style: none;
+  margin: 0 15px;
+  border-radius: 3px;
+}
+
+.menu__link {
+  padding: 6px 25px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 1.2px;
+  color: #444;
+  line-height: 18px;
+}
+
+.menu__link:visited, .menu__link:focus {
+  color: #444;
+}
+
+.menu__link:hover {
+  color: var(--color-accent);
+}
+
+.menu__link-icon {
+  margin-right: 8px;
 }
 /*# sourceMappingURL=main.css.map */
