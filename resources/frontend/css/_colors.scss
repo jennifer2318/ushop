@@ -8,6 +8,7 @@
     --color-white: #ffffff;
     --color-grey-dark: #9c9c9c;
     --color-accent: #365edc;
+    --color-accentA: 54, 94, 220;
     --color-accent-light: #586fbf;
 }
 
@@ -16,6 +17,7 @@ $grey: var(--ui-color-grey);
 $greyDark: var(--color-grey-dark);
 $white: var(--color-white);
 $accent: var(--color-accent);
+$accentA: var(--color-accentA);
 $accentLight: var(--color-accent-light);
 
 $searchColor: var(--ui-search-color);
