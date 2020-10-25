@@ -592,6 +592,18 @@ body::-webkit-scrollbar-thumb {
   font-size: 16px;
 }
 
+.bordered-btn {
+  border: 1px solid var(--color-accent);
+  padding: 8px 15px;
+  background: var(--color-white);
+  font-size: 12px;
+}
+
+.bordered-btn:hover {
+  color: var(--color-white);
+  background: var(--color-accent);
+}
+
 .callback-btn {
   color: var(--color-accent);
   background: transparent;
@@ -1190,13 +1202,16 @@ a:hover {
   margin: 0 15px;
   font-size: 13px;
   position: relative;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
 
-.filter__btn:hover, .filter__btn.button:hover {
-  color: var(--color-black);
-}
-
-.filter__btn.active:after {
+.filter__btn:after, .filter__btn.button:after {
+  -webkit-transition: all .3s ease;
+  transition: all .3s ease;
+  opacity: 0;
   content: "";
   position: absolute;
   width: calc(100% + 4px);
@@ -1204,6 +1219,33 @@ a:hover {
   background: var(--color-accent);
   bottom: 0;
   left: -2px;
+}
+
+.filter__btn:hover, .filter__btn.button:hover {
+  color: var(--color-black);
+}
+
+.filter__btn.active:after {
+  opacity: 1;
+}
+
+.catalog__appendBtn {
+  padding: 12px 17px;
+  font-size: 10px;
+  letter-spacing: 1.1px;
+}
+
+.catalog__actions {
+  padding-top: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 .header {

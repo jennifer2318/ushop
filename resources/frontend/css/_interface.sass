@@ -27,6 +27,14 @@ body::-webkit-scrollbar-thumb
         margin-right: 10px
         font-size: 16px
 
+.bordered-btn
+    border: 1px solid $accent
+    padding: 8px 15px
+    background: $white
+    font-size: 12px
+    &:hover
+        color: $white
+        background: $accent
 
 .callback-btn
     color: $accent
@@ -382,10 +390,10 @@ a
         margin: 0 15px
         font-size: 13px
         position: relative
-        &:hover
-            color: $black
-    &__btn.active
+        user-select: none
         &:after
+            transition: all .3s ease
+            opacity: 0
             content: ""
             position: absolute
             width: calc(100% + 4px)
@@ -393,3 +401,19 @@ a
             background: $accent
             bottom: 0
             left: -2px
+        &:hover
+            color: $black
+    &__btn.active
+        &:after
+            opacity: 1
+
+.catalog
+    &__appendBtn
+        padding: 12px 17px
+        font-size: 10px
+        letter-spacing: 1.1px
+    &__actions
+        padding-top: 20px
+        display: flex
+        justify-content: center
+        align-items: center

@@ -717,7 +717,7 @@
             <h3 class="section__title">Лучшие предложения</h3>
 
             <div class="section__top-container">
-                <div class="filter ajax" data-filter="">
+                <div class="filter ajax" data-filter="main_page_catalog" appendAction="main_page_catalog_appendBtn">
                     <span class="filter__btn button active" filter-type="catalog::hit">Хит</span>
                     <span class="filter__btn button" filter-type="catalog::advise">Советуем</span>
                     <span class="filter__btn button" filter-type="catalog::new">Новинка</span>
@@ -727,7 +727,20 @@
             </div>
         </div>
         <div class="container">
+            <div class="catalog " id="main_page_catalog">
+                <div class="items catalog__items">
+                    <div class="items__wrapper">
+                        <div class="item">
+                            <div class="item__content">
 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="catalog__actions">
+                    <button class="button bordered-btn catalog__appendBtn" id="main_page_catalog_appendBtn">Загрузить еще</button>
+                </div>
+            </div>
         </div>
     </section>
 

@@ -355,14 +355,25 @@ window.DataFilter = {
         e.preventDefault();
 
         const targetObj = Self.filters[key];
+
+        if (targetObj.activeKey === btnKey) {
+            return;
+        }
+
         const target = Self.filters[key].buttons[btnKey];
         const filterTypeValue = target.attributes.getNamedItem('filter-type').value;
 
+        targetObj.activeDom.classList.remove('active');
+
         targetObj.lastAction = filterTypeValue;
+        targetObj.activeKey = btnKey;
+        targetObj.activeDom = target;
+
+        target.classList.add('active');
 
         axios.post(`/${ Self.getUrl(filterTypeValue)}`, {type: Self.getType(filterTypeValue)})
             .then( response => {
-                Self.onSuccess(response);
+                Self.onSuccess(response, key);
             })
             .catch( error => {
                 Self.onError(error);
@@ -377,10 +388,19 @@ window.DataFilter = {
     onError: (err) => {
         console.log(err);
     },
-    onSuccess: (resp) => {
+    onSuccess: (resp, key) => {
+        const Self = window.DataFilter;
+
+        const targetObj = Self.filters[key];
+
         console.log(resp);
     },
-    onAppend: (e) => {
+    onAppend: (e, key) => {
+        const Self = window.DataFilter;
+
+        e.preventDefault();
+
+        const targetObj = Self.filters[key];
         console.log('append');
     },
     init: () => {
@@ -409,6 +429,8 @@ window.DataFilter = {
                     dataFilter: dataFilterDom,
                     lastAction: '',
                     activeDom: null,
+                    activeKey: 0,
+                    elementsCount: 0,
                 };
 
                 [].forEach.call(filterButtons, (btn, key) => {
@@ -424,6 +446,7 @@ window.DataFilter = {
                         if (key === 0) {
                             Self.filters[k].activeDom = btn;
                             Self.filters[k].lastAction = filterType.value;
+                            Self.filters[k].activeKey = 0;
                         }
 
                     }
@@ -437,7 +460,7 @@ window.DataFilter = {
                     if (appendDom !== null) {
                         Self.filters[k].appendDom = appendDom;
                         appendDom.addEventListener('click', e => {
-                            Self.onAppend(e);
+                            Self.onAppend(e, k);
                         });
                     }
 
