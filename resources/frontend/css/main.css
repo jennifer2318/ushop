@@ -597,6 +597,7 @@ body::-webkit-scrollbar-thumb {
   padding: 8px 15px;
   background: var(--color-white);
   font-size: 12px;
+  color: var(--color-accent);
 }
 
 .bordered-btn:hover {
