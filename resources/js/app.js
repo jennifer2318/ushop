@@ -354,15 +354,13 @@ window.DataFilter = {
 
         e.preventDefault();
 
+        const targetObj = Self.filters[key];
         const target = Self.filters[key].buttons[btnKey];
         const filterTypeValue = target.attributes.getNamedItem('filter-type').value;
 
-        const indexDelimiter = filterTypeValue.indexOf('::');
+        targetObj.lastAction = filterTypeValue;
 
-        const filterUrl = filterTypeValue.substr(0, indexDelimiter);
-        const filterType = filterTypeValue.substr(indexDelimiter + 2);
-
-        axios.post(`/${filterUrl}`, {type: filterType})
+        axios.post(`/${ Self.getUrl(filterTypeValue)}`, {type: Self.getType(filterTypeValue)})
             .then( response => {
                 Self.onSuccess(response);
             })
@@ -370,11 +368,20 @@ window.DataFilter = {
                 Self.onError(error);
             });
     },
+    getUrl: (str) => {
+        return str.substr(0, str.indexOf('::'));
+    },
+    getType: (str) => {
+        return str.substr(str.indexOf('::') + 2);
+    },
     onError: (err) => {
         console.log(err);
     },
     onSuccess: (resp) => {
         console.log(resp);
+    },
+    onAppend: (e) => {
+        console.log('append');
     },
     init: () => {
         const Self = window.DataFilter;
@@ -382,21 +389,59 @@ window.DataFilter = {
         const filters = document.querySelectorAll('[data-filter]');
 
         [].forEach.call(filters , (v, k) => {
+
+            const dataFilter = v.attributes.getNamedItem('data-filter');
+            if (dataFilter === null || dataFilter.value === '') {
+                return;
+            }
+
+            const dataFilterDom = document.querySelector(`#${dataFilter.value}`);
+            if (dataFilterDom === null) {
+                return;
+            }
+
             const filterButtons = v.querySelectorAll(`.${Self.btnClass}`);
 
             if (filterButtons.length > 0) {
                 Self.filters[k] = {
                     dom: v,
-                    buttons: filterButtons
+                    buttons: [],
+                    dataFilter: dataFilterDom,
+                    lastAction: '',
+                    activeDom: null,
                 };
 
                 [].forEach.call(filterButtons, (btn, key) => {
-                    if (btn.attributes.getNamedItem('filter-type') !== null) {
+                    const filterType = btn.attributes.getNamedItem('filter-type');
+                    if (filterType !== null && filterType.value !== '') {
+
+                        Self.filters[k].buttons.push(btn);
+
                         btn.addEventListener('click', e => {
                             Self.onClick(e, k, key);
                         });
+
+                        if (key === 0) {
+                            Self.filters[k].activeDom = btn;
+                            Self.filters[k].lastAction = filterType.value;
+                        }
+
                     }
                 });
+
+                const appendAction = v.attributes.getNamedItem('appendAction');
+
+                if (appendAction !== null && appendAction.value !== '') {
+
+                    const appendDom = document.querySelector(`#${appendAction.value}`);
+                    if (appendDom !== null) {
+                        Self.filters[k].appendDom = appendDom;
+                        appendDom.addEventListener('click', e => {
+                            Self.onAppend(e);
+                        });
+                    }
+
+                }
             }
         });
     }
