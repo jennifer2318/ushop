@@ -1,11 +1,13 @@
 :root {
     --ui-global-color: #333;
     --ui-search-color: #444;
+    --ui-filter-color: #777;
     --ui-search-background-color: #fafafa;
     --ui-search-border-color: #ececec;
     --ui-search-placeholder-color: #b8b8b8;
     --ui-color-grey: #dedede;
     --color-white: #ffffff;
+    --color-black: #000000;
     --color-grey-dark: #9c9c9c;
     --color-accent: #365edc;
     --color-accentA: 54, 94, 220;
@@ -13,6 +15,8 @@
 }
 
 $globalColor: var(--ui-global-color);
+$filterColor: var(--ui-filter-color);
+$black: var(--color-black);
 $grey: var(--ui-color-grey);
 $greyDark: var(--color-grey-dark);
 $white: var(--color-white);

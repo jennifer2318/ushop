@@ -373,3 +373,23 @@ a
 .btn-catalog
     font-size: 11px
     padding: 8px 25px
+
+.filter
+    display: flex
+    &__btn, &__btn.button
+        color: $filterColor
+        text-transform: none
+        margin: 0 15px
+        font-size: 13px
+        position: relative
+        &:hover
+            color: $black
+    &__btn.active
+        &:after
+            content: ""
+            position: absolute
+            width: calc(100% + 4px)
+            height: 2px
+            background: $accent
+            bottom: 0
+            left: -2px

@@ -92,7 +92,7 @@ window.Selectors = {
     onFocus: (e, v, optionsContainer) => {
         const Self = window.Selectors;
 
-        Array.prototype.forEach.call(Self.selectorElements, (el, k) => {
+        [].forEach.call(Self.selectorElements, (el, k) => {
             if (el.dom === v && !el.dom.classList.contains(Self.activeClassName)) return;
 
             const optionsContainer = el.dom.querySelector('.selector__options');
@@ -119,7 +119,7 @@ window.Selectors = {
             active.innerHTML = target.innerHTML;
             field.value = target.innerHTML;
 
-            Array.prototype.forEach.call(elements, (curEl, k) => {
+            [].forEach.call(elements, (curEl, k) => {
                 curEl.classList.remove('selected');
             });
 
@@ -132,7 +132,7 @@ window.Selectors = {
 
       const elements = document.querySelectorAll('.selector');
 
-      Array.prototype.forEach.call(elements, (v, k) => {
+      [].forEach.call(elements, (v, k) => {
           const field = v.querySelector('input');
           const optionsContainer = v.querySelector('.selector__options');
           const options = v.querySelectorAll('.selector__options .option');
@@ -160,7 +160,7 @@ window.Selectors = {
               let selectHandler = {};
 
               if (noSelect === null) {
-                  Array.prototype.forEach.call(options, (el, kk) => {
+                  [].forEach.call(options, (el, kk) => {
 
                       if (el.classList.contains('selected')) {
                           Self.onSelect({target: el}, v, el, field, elements, optionsContainer);
@@ -210,7 +210,7 @@ window.Dropdowns = {
 
         const elements = document.querySelectorAll('.dropdown');
 
-        Array.prototype.forEach.call(elements, (v, k) => {
+        [].forEach.call(elements, (v, k) => {
             const wrap = v.querySelector('.dropdown__wrap');
             const dropdownElements = v.querySelectorAll('.dropdown__wrap .dropdown__element');
 
@@ -316,11 +316,11 @@ window.Popups = {
         const popupElements = document.querySelectorAll('.popup');
         const popupWrap = Self.popupContainer.querySelector('.popup-wrap');
 
-        Array.prototype.forEach.call(popupElements, (v, k) => {
+        [].forEach.call(popupElements, (v, k) => {
             popupWrap.insertBefore(v, null);
         });
 
-        Array.prototype.forEach.call(popupCallers, (v, k) => {
+        [].forEach.call(popupCallers, (v, k) => {
 
             const jpPopupAttr = v.attributes.getNamedItem('js-popup');
             const popup = document.querySelector('.' + jpPopupAttr.value);
@@ -344,6 +344,62 @@ window.Popups = {
         popupContainer.addEventListener('click', popupClickHandler);
     }
 
+};
+
+window.DataFilter = {
+    filters: {},
+    btnClass: 'filter__btn',
+    onClick: (e, key, btnKey) => {
+        const Self = window.DataFilter;
+
+        e.preventDefault();
+
+        const target = Self.filters[key].buttons[btnKey];
+        const filterTypeValue = target.attributes.getNamedItem('filter-type').value;
+
+        const indexDelimiter = filterTypeValue.indexOf('::');
+
+        const filterUrl = filterTypeValue.substr(0, indexDelimiter);
+        const filterType = filterTypeValue.substr(indexDelimiter + 2);
+
+        axios.post(`/${filterUrl}`, {type: filterType})
+            .then( response => {
+                Self.onSuccess(response);
+            })
+            .catch( error => {
+                Self.onError(error);
+            });
+    },
+    onError: (err) => {
+        console.log(err);
+    },
+    onSuccess: (resp) => {
+        console.log(resp);
+    },
+    init: () => {
+        const Self = window.DataFilter;
+
+        const filters = document.querySelectorAll('[data-filter]');
+
+        [].forEach.call(filters , (v, k) => {
+            const filterButtons = v.querySelectorAll(`.${Self.btnClass}`);
+
+            if (filterButtons.length > 0) {
+                Self.filters[k] = {
+                    dom: v,
+                    buttons: filterButtons
+                };
+
+                [].forEach.call(filterButtons, (btn, key) => {
+                    if (btn.attributes.getNamedItem('filter-type') !== null) {
+                        btn.addEventListener('click', e => {
+                            Self.onClick(e, k, key);
+                        });
+                    }
+                });
+            }
+        });
+    }
 };
 
 class Slider {
@@ -420,7 +476,7 @@ class Slider {
 
         switch (cfg.type) {
             case 'opacity' : {
-                Array.prototype.forEach.call(cfg.dataDom, (v, k) => {
+                [].forEach.call(cfg.dataDom, (v, k) => {
 
                     cfg.dataDom[k].style.opacity = 0;
                     cfg.dataDom[k].style.position = 'absolute';
@@ -507,7 +563,7 @@ class Slider {
             cfg.dotsDom = cfg.selectorDom.querySelector('.slider__dots');
 
             cfg.dotsDataDom = [];
-            Array.prototype.forEach.call(cfg.dataDom, (v, k) => {
+            [].forEach.call(cfg.dataDom, (v, k) => {
                 const dot = document.createElement('span');
                 dot.classList.add('slider__dots-dot');
                 if (cfg.active === k) {
@@ -713,7 +769,7 @@ class Slider {
         switch (cfg.type) {
             case 'opacity' : break;
             default: {
-                Array.prototype.forEach.call(cfg.dataDom, (v, k) => {
+                [].forEach.call(cfg.dataDom, (v, k) => {
                     cfg.positions[k] = -(width * k);
                 });
             }
@@ -727,7 +783,7 @@ class Slider {
         switch (cfg.type) {
             case 'opacity' : {
 
-                Array.prototype.forEach.call(cfg.dataDom, (v, k) => {
+                [].forEach.call(cfg.dataDom, (v, k) => {
                    if (k !== cfg.last && k !== cfg.active) {
 
                        cfg.dataDom[k].style.opacity = 0;
@@ -850,7 +906,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const countBlocks = document.querySelectorAll('.count-block .count-block__count');
 
-    Array.prototype.forEach.call(countBlocks, (v) => {
+    [].forEach.call(countBlocks, (v) => {
 
         if (v.innerHTML.trim().length >= 3) {
             v.classList.add('count-block__count-big');
@@ -864,6 +920,7 @@ document.addEventListener('DOMContentLoaded', function() {
     Popups.init();
     Selectors.init();
     Dropdowns.init();
+    DataFilter.init();
 
     new Slider({
         auto: true,
