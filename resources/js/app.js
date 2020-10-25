@@ -998,12 +998,15 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 document.addEventListener("DOMContentLoaded", function() {
-    let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
-    let lazyIframes = [].slice.call(document.querySelectorAll("iframe.lazy"));
-    let lazyBackgrounds = [].slice.call(document.querySelectorAll(".lazy-background"));
+
     let active = false;
 
     const lazyLoad = function() {
+
+        let lazyImages = [].slice.call(document.querySelectorAll("img.lazy"));
+        let lazyIframes = [].slice.call(document.querySelectorAll("iframe.lazy"));
+        let lazyBackgrounds = [].slice.call(document.querySelectorAll(".lazy-background"));
+
         if (active === false) {
             active = true;
 
