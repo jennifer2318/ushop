@@ -19,6 +19,9 @@ class ProductSeeder extends Seeder
             DB::table('products')->insert([
                 'uid' => UID::createUID(),
                 'title' => 'Product ' . $i,
+                'title_ru' => 'Товар ' . $i,
+                'description' => 'Description ' . $i,
+                'description_ru' => 'Описание ' . $i,
                 'price' => 50 * $i,
                 Product::CREATED_AT => Carbon::now(),
                 Product::UPDATED_AT => Carbon::now(),
