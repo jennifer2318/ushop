@@ -46,7 +46,9 @@ mix.config.babelConfig =
 
 mix.js('resources/js/app.js', 'public/js')
     .js('resources/js/loader.js', 'public/js')
-    // .scripts(['resources/js/polyfill.js'], 'public/js/polyfill.js')
-    .sass('resources/sass/app.scss', 'public/css')
-    .copy('public/js/app.js', 'resources/frontend/js/app.js');
+    .scripts(['resources/js/polyfill.js'], 'public/js/polyfill.js')
+    .copy('public/js/app.js', 'resources/frontend/js/app.js')
+    .copy('resources/frontend/css/main.css', 'public/css/app.css')
+    .copy('resources/frontend/css/fontawesome/fontawesome.css', 'public/css/fontawesome.css')
+    .copy('resources/frontend/css/main.css.map', 'public/css/app.css.map');
     // .copy('public/js/polyfill.js', 'resources/frontend/js/polyfill.js');

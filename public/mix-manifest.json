@@ -1,6 +1,9 @@
 {
     "/js/app.js": "/js/app.js",
-    "/css/app.css": "/css/app.css",
     "/js/loader.js": "/js/loader.js",
-    "/resources/frontend/js/app.js": "/resources/frontend/js/app.js"
+    "/js/polyfill.js": "/js/polyfill.js",
+    "/resources/frontend/js/app.js": "/resources/frontend/js/app.js",
+    "/css/app.css": "/css/app.css",
+    "/css/fontawesome.css": "/css/fontawesome.css",
+    "/css/app.css.map": "/css/app.css.map"
 }
