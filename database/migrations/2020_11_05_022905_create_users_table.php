@@ -22,9 +22,13 @@ class CreateUsersTable extends Migration
             $table->string('login')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->smallInteger('user_type')->nullable(false)->default(2);
+            $table->bigInteger('user_type_id')->nullable(false)->default(2)->unsigned();
             $table->rememberToken()->default(Str::random(10));
             $table->timestamps();
+        });
+
+        Schema::table('users', function (Blueprint $table) {
+            $table->foreign('user_type_id')->references('id')->on('user_types')->onDelete('cascade');
         });
     }
 

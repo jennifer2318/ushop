@@ -23,7 +23,7 @@ class UserSeeder extends Seeder
             'login' => 'rootadmin',
             'email_verified_at' => Carbon::now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi',
-            'user_type' => 0,
+            'user_type_id' => 1,
             'remember_token' => Str::random(16),
             User::CREATED_AT => Carbon::now(),
             User::UPDATED_AT => Carbon::now(),

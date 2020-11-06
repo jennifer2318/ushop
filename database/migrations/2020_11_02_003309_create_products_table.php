@@ -22,10 +22,16 @@ class CreateProductsTable extends Migration
             $table->string('description_ru');
             $table->double('price')->nullable(false);
             $table->double('multiplier')->default(1);
-            $table->integer('category_id')->default(1);
-            $table->integer('action_id')->nullable(true);
-            $table->integer('image_id')->nullable(true);
+            $table->bigInteger('category_id')->unsigned()->default(1);
+            $table->bigInteger('action_id')->unsigned()->nullable(true);
+            $table->bigInteger('image_id')->unsigned()->nullable(true);
             $table->timestamps();
+        });
+
+        Schema::table('products', function (Blueprint $table) {
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->foreign('image_id')->references('id')->on('images')->onDelete('cascade');
+//            $table->foreign('action_id')->references('id')->on('actions')->onDelete('cascade');
         });
     }
 
