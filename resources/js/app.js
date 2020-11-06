@@ -945,7 +945,7 @@ const resizeFixedHeaderHandler = (e) => {
 };
 resizeEvents.fixedHeader = {handler : resizeFixedHeaderHandler, name: 'fixedHeader'};
 
-document.addEventListener('DOMContentLoaded', function() {
+const mainBlock = function() {
 
     const isVisibilitySupport = document.body.style.hasOwnProperty('content-visibility');
 
@@ -995,9 +995,9 @@ document.addEventListener('DOMContentLoaded', function() {
         dots: true,
         type: 'opacity',
     });
-});
+};
 
-document.addEventListener("DOMContentLoaded", function() {
+const lazyBlock = function() {
 
     let active = false;
 
@@ -1048,4 +1048,12 @@ document.addEventListener("DOMContentLoaded", function() {
     window.addEventListener("resize", lazyLoad);
     window.addEventListener("orientationchange", lazyLoad);
     lazyLoad();
-});
+};
+
+if (document.readyState !== "loading") {
+    mainBlock();
+    lazyBlock();
+} else {
+    document.addEventListener("DOMContentLoaded", mainBlock);
+    document.addEventListener("DOMContentLoaded", lazyBlock);
+}

@@ -25,7 +25,8 @@
 
         const config = {
             js: [
-                {index: 0, url: 'http://ushop.loc/js/app.js', type: null},
+                {index: 0, url: 'http://ushop.loc/js/polyfill.js', type: null},
+                {index: 1, url: 'http://ushop.loc/js/app.js', type: null},
             ]
         };
 

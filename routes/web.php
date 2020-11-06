@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Request as HttpRequest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,4 +20,8 @@ Route::get('/admin/login', 'Admin\LoginController@indexAction');
 
 Route::get('/', function () {
     return view('index');
+});
+
+Route::post('/catalog', function() {
+    echo json_encode(HttpRequest::all());
 });
