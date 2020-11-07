@@ -776,6 +776,9 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="item__buttons">
+                            <a class="item__buttons-element button btn-accent">Подробнее</a>
+                        </div>
                     </div>
                 </div>
             </div>

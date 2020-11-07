@@ -423,14 +423,14 @@ a
     .items
         .item.product-item
             flex: unset
-            padding: 0 15px
+            padding: 0
             width: 20%
             margin: 0 0 -1px -1px
+            flex-direction: column
     .product-item
         position: relative
         border: 1px solid var(--ui-search-border-color)
         transition: box-shadow .2s , border .2s ease-out , transform .2s
-        overflow: hidden
         text-align: left
         &:hover
             box-shadow: 0 0px 45px 5px rgba(221, 221, 221, 1)
@@ -439,6 +439,8 @@ a
             .icons-block
                 &__item
                     opacity: 1
+            .item__buttons
+                display: flex
 
         .icons-block, .actions-top
             position: absolute
@@ -489,6 +491,7 @@ a
             height: 100%
         .item__content
             flex-direction: column
+            padding: 0 15px
         .item__thumb
             display: flex
             height: 290px
@@ -585,3 +588,19 @@ a
 
                 &__currency
                     margin-left: 5px
+        .item__buttons
+            display: none
+            width: 100%
+            position: absolute
+            left: 0
+            top: 100%
+            &-element
+                flex: 1 1 auto
+            .button
+                border-top-right-radius: 0
+                border-top-left-radius: 0
+                justify-content: center
+                font-size: 11px
+                line-height: normal
+                letter-spacing: 1.05px
+                padding: 15px 20px
