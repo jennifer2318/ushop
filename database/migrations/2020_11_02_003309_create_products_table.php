@@ -20,6 +20,7 @@ class CreateProductsTable extends Migration
             $table->string('title_ru');
             $table->string('description');
             $table->string('description_ru');
+            $table->string('art')->nullable();
             $table->double('price')->nullable(false);
             $table->double('multiplier')->default(1);
             $table->bigInteger('category_id')->unsigned()->default(1);

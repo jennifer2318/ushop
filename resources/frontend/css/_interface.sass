@@ -418,3 +418,170 @@ a
         display: flex
         justify-content: center
         align-items: center
+    .items__wrapper
+        justify-content: flex-start
+    .items
+        .item.product-item
+            flex: unset
+            padding: 0 15px
+            width: 20%
+            margin: 0 0 -1px -1px
+    .product-item
+        position: relative
+        border: 1px solid var(--ui-search-border-color)
+        transition: box-shadow .2s , border .2s ease-out , transform .2s
+        overflow: hidden
+        text-align: left
+        &:hover
+            box-shadow: 0 0px 45px 5px rgba(221, 221, 221, 1)
+            transform: translateY(-1px)
+            border-color: $white
+            .icons-block
+                &__item
+                    opacity: 1
+
+        .icons-block, .actions-top
+            position: absolute
+            top: 0
+            display: flex
+            z-index: 2
+            margin-top: 15px
+            height: auto
+        .icons-block
+            right: 0
+            width: 50%
+            flex-direction: column
+            align-items: flex-end
+            padding-left: 10px
+            padding-bottom: 10px
+            transition: right .3s ease, opacity .8s ease-out
+            &__item
+                margin: 0 0 4px
+                font-size: 16px
+                padding: 6px 7px
+                background: $white
+                transition: .3s ease
+                opacity: 0
+                i, svg
+                    width: 16px
+                    height: 16px
+                &:hover
+                    background: $accent
+                    color: $white
+        .actions-top
+            left: 0
+            width: 50%
+            flex-wrap: wrap
+            &__action
+                padding: 4px 6px
+                margin-right: 5px
+                margin-bottom: 5px
+                letter-spacing: normal
+                font-size: 12px
+                line-height: 14px
+                background: $blue
+                color: $white
+                border-radius: 2px
+        .item__image-wapper, .item__content
+            position: relative
+            display: flex
+            width: 100%
+            height: 100%
+        .item__content
+            flex-direction: column
+        .item__thumb
+            display: flex
+            height: 290px
+            width: 100%
+            position: relative
+            padding: 15px 0
+            .image-selector
+                position: absolute
+                top: 0
+                left: 0
+                width: 100%
+                height: 100%
+                display: flex
+                &__item-nav
+                    display: flex
+                    position: relative
+                    width: 100%
+                    &::after
+                        content: ""
+                        position: absolute
+                        bottom: 0
+                        left: 2px
+                        display: block
+                        width: calc(100% - 4px)
+                        height: 1px
+                        background: #cdcdcd
+                &__item
+                    width: 100%
+                    height: 100%
+                    display: flex
+                    flex-grow: 1
+                    img
+                        width: 100%
+                        height: 100%
+                        object-fit: cover
+                        position: absolute
+                        margin: auto
+                        top: 0
+                        bottom: 0
+                        left: 0
+                        right: 0
+                        border: 0
+                        vertical-align: middle
+                        max-width: 100%
+                        max-height: 100%
+                        pointer-events: none
+                        opacity: 0
+                        padding: 10px 0
+                &__item.active
+                    .image-selector__item-nav
+                        &::after
+                            background: $accent
+                    img
+                        opacity: 1
+        .item__info
+            margin-top: 20px
+            margin-bottom: 20px
+            .info-rating
+                display: flex
+                align-items: center
+                font-size: 12px
+                line-height: 16px
+                &__wrapper
+                    display: flex
+                &__item
+                    color: $grey
+                    &:not(:last-child)
+                        margin-right: 3px
+                &__item.filled
+                    color: $gold
+                &__count
+                    font-size: 13px
+                    margin-left: 10px
+            .item__title
+                font-size: 14px
+                line-height: 18px
+                &-link
+                    text-transform: unset
+                    +normal
+            .item__art
+                margin-bottom: 10px
+                display: flex
+                text-align: left
+                span
+                    font-size: 12px
+                    line-height: 12px
+                    color: $greyDark
+            .price
+                display: flex
+                +bold
+                font-size: 16px
+                line-height: 20px
+                &__value
+
+                &__currency
+                    margin-left: 5px

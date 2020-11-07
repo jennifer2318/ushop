@@ -39,6 +39,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string|null $art
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereArt($value)
  */
 class Product extends Model
 {

@@ -10,6 +10,8 @@
     --color-black: #000000;
     --color-grey-dark: #9c9c9c;
     --color-accent: #365edc;
+    --color-blue: #2992d9;
+    --color-gold: #e6c553;
     --color-accentA: 54, 94, 220;
     --color-accent-light: #586fbf;
 }
@@ -21,6 +23,8 @@ $grey: var(--ui-color-grey);
 $greyDark: var(--color-grey-dark);
 $white: var(--color-white);
 $accent: var(--color-accent);
+$blue: var(--color-blue);
+$gold: var(--color-gold);
 $accentA: var(--color-accentA);
 $accentLight: var(--color-accent-light);
 

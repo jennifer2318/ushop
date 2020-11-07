@@ -716,12 +716,65 @@
         </div>
     </div>
     <div class="container">
-        <div class="catalog " id="main_page_catalog">
+        <div class="catalog" id="main_page_catalog">
             <div class="items catalog__items">
                 <div class="items__wrapper">
-                    <div class="item">
-                        <div class="item__content">
 
+                    <div class="item product-item">
+                        <div class="item__content">
+                            <div class="item__image-wapper">
+                                <div class="item__actions-top actions-top">
+                                    <span class="actions-top__action">Хит</span>
+                                </div>
+                                <div class="item__icons-block icons-block">
+                                    <span title="Нравится" class="icons-block__item button"><i class="far fa-heart"></i></span>
+                                    <span title="Быстрый просмотр" class="icons-block__item button"><i class="far fa-eye"></i></span>
+                                </div>
+                                <a href="#" class="item__thumb">
+                                    <div class="item__image-selector image-selector">
+                                            <span class="image-selector__item active">
+                                                <span class="image-selector__item-nav"></span>
+                                                <img class="lazy" data-src="/css/img/p1.1.jpg" data-srcset="/img/p1.1.jpg" alt="">
+                                            </span>
+                                        <span class="image-selector__item">
+                                                <span class="image-selector__item-nav"></span>
+                                                <img class="lazy" data-src="/css/img/p1.2.jpg" data-srcset="/img/p1.2.jpg" alt="">
+                                            </span>
+                                        <span class="image-selector__item">
+                                                <span class="image-selector__item-nav"></span>
+                                                <img class="lazy" data-src="/css/img/p1.3.jpg" data-srcset="/img/p1.3.jpg" alt="">
+                                            </span>
+                                        <span class="image-selector__item">
+                                                <span class="image-selector__item-nav"></span>
+                                                <img class="lazy" data-src="/css/img/p1.4.jpg" data-srcset="/img/p1.4.jpg" alt="">
+                                            </span>
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="item__info">
+                                <div class="item__info-rating info-rating">
+                                    <div class="info-rating__wrapper" title="Рейтинг 4 из 5">
+                                        <div class="info-rating__item filled"><i class="fas fa-star"></i></div>
+                                        <div class="info-rating__item filled"><i class="fas fa-star"></i></div>
+                                        <div class="info-rating__item filled"><i class="fas fa-star"></i></div>
+                                        <div class="info-rating__item filled"><i class="fas fa-star"></i></div>
+                                        <div class="info-rating__item"><i class="fas fa-star"></i></div>
+                                    </div>
+                                    <div class="info-rating__count">3</div>
+                                </div>
+                                <h4 class="item__title">
+                                    <a href="#" class="item__title-link button">
+                                        <span>Смартфон SY 15</span>
+                                    </a>
+                                </h4>
+                                <div class="item__art">
+                                    <span>Арт.: D98186A5</span>
+                                </div>
+                                <div class="item__price price">
+                                    <div class="price__value">30 000</div>
+                                    <div class="price__currency">₽</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
