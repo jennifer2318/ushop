@@ -393,7 +393,7 @@ window.DataFilter = {
 
         const targetObj = Self.filters[key];
 
-        console.log(resp);
+        console.log(resp.data);
     },
     onAppend: (e, key) => {
         const Self = window.DataFilter;
@@ -467,6 +467,49 @@ window.DataFilter = {
                 }
             }
         });
+    }
+};
+
+window.ImageSelector = {
+    imageSelectors: {},
+    activeClassName: 'active',
+    onMouseEnter: (e, v, k, parent) => {
+        const Self = window.ImageSelector;
+
+        const active = parent.querySelector(`.image-selector__item.${Self.activeClassName}`);
+
+        if (active !== null) {
+            active.classList.remove('active');
+        }
+
+        v.classList.add('active');
+    },
+    init: () => {
+        const Self = window.ImageSelector;
+
+        const selectors = document.querySelectorAll('.image-selector');
+
+        [].forEach.call(selectors, (v, k) => {
+
+            if (Object.values(Self.imageSelectors).find( p => p.active === true && p.dom === v) !== undefined) return;
+
+            const images = v.querySelectorAll('.image-selector__item');
+            if (images !== null && images.length > 1) {
+                images[0].classList.add('active');
+
+                [].forEach.call(images, (el, key) => {
+                   el.addEventListener('mouseenter', e => {
+                       Self.onMouseEnter(e, el, key, v);
+                   })
+                });
+            } else if (images.length === 1) {
+                images[0].classList.add('active');
+                images[0].querySelector('.image-selector__item-nav').style.display = 'none';
+            }
+
+            Self.imageSelectors[k] = {dom: v, active: true}
+        });
+
     }
 };
 
@@ -989,6 +1032,7 @@ const mainBlock = function() {
     Selectors.init();
     Dropdowns.init();
     DataFilter.init();
+    ImageSelector.init();
 
     new Slider({
         auto: true,
