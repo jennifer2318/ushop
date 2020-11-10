@@ -41,6 +41,8 @@ use Illuminate\Database\Eloquent\Model;
  * @mixin \Eloquent
  * @property string|null $art
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereArt($value)
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
+ * @property-read int|null $tags_count
  */
 class Product extends Model
 {
@@ -69,6 +71,16 @@ class Product extends Model
     public function image()
     {
         return $this->belongsTo('App\Models\Image');
+    }
+
+    /**
+     * Tags.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function tags()
+    {
+        return $this->hasMany('App\Models\Tag');
     }
 
 }
