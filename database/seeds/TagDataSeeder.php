@@ -16,6 +16,7 @@ class TagDataSeeder extends Seeder
     {
         DB::table('tags_data')->insert([
             'uid' => UID::createUID(),
+            'key' => 'hit',
             'title' => 'Hit',
             'title_ru' => 'Хит',
             'color' => 'var(--color-blue)',

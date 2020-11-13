@@ -43,6 +43,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereArt($value)
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Tag[] $tags
  * @property-read int|null $tags_count
+ * @property float|null $rating
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Review[] $reviews
+ * @property-read int|null $reviews_count
+ * @method static \Illuminate\Database\Eloquent\Builder|Product whereRating($value)
  */
 class Product extends Model
 {
@@ -81,6 +85,16 @@ class Product extends Model
     public function tags()
     {
         return $this->hasMany('App\Models\Tag');
+    }
+
+    /**
+     * Reviews.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function reviews()
+    {
+        return $this->hasMany('App\Models\Review');
     }
 
 }

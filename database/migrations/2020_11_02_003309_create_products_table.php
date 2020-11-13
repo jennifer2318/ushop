@@ -15,7 +15,7 @@ class CreateProductsTable extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->string('uid');
+            $table->string('uid', 34);
             $table->string('title');
             $table->string('title_ru');
             $table->string('description');
@@ -23,6 +23,7 @@ class CreateProductsTable extends Migration
             $table->string('art')->nullable();
             $table->double('price')->nullable(false);
             $table->double('multiplier')->default(1);
+            $table->double('rating')->nullable();
             $table->bigInteger('category_id')->unsigned()->default(1);
             $table->bigInteger('action_id')->unsigned()->nullable(true);
             $table->bigInteger('image_id')->unsigned()->nullable(true);

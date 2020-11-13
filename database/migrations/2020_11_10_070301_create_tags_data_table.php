@@ -15,7 +15,8 @@ class CreateTagsDataTable extends Migration
     {
         Schema::create('tags_data', function (Blueprint $table) {
             $table->id();
-            $table->string('uid');
+            $table->string('uid', 34);
+            $table->string('key');
             $table->string('title');
             $table->string('title_ru');
             $table->boolean('is_top')->default(false);

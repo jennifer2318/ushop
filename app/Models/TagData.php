@@ -27,6 +27,8 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|TagData whereUid($value)
  * @method static \Illuminate\Database\Eloquent\Builder|TagData whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $key
+ * @method static \Illuminate\Database\Eloquent\Builder|TagData whereKey($value)
  */
 class TagData extends Model
 {
