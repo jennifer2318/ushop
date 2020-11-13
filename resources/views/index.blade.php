@@ -1,5 +1,23 @@
 @include('layout.head')
 
+<?php
+use DebugBar\StandardDebugBar;
+$debugbar = new StandardDebugBar();
+$debugbarRenderer = $debugbar->getJavascriptRenderer();
+?>
+<?php echo $debugbarRenderer->renderHead() ?>
+
+<?php
+    $hitProductsTagData = \App\Models\TagData::whereIsTop(true)->where('key', '=', 'hit')->get()->all();
+    $hitProducts = [];
+
+    foreach ($hitProductsTagData as $k => $v) {
+        foreach (\App\Models\Tag::whereTagsDataId($v->id)->get()->all() as $key => $tagData) {
+            $hitProducts[$tagData->product->id] = $tagData->product;
+        }
+    }
+?>
+
 <header>
 
     <div class="header header-main">
@@ -734,19 +752,19 @@
                                     <div class="item__image-selector image-selector">
                                             <span class="image-selector__item active">
                                                 <span class="image-selector__item-nav"></span>
-                                                <img class="lazy" data-src="/css/img/p1.1.jpg" data-srcset="/img/p1.1.jpg" alt="">
+                                                <img class="lazy" data-src="/img/p1.1.jpg" data-srcset="/img/p1.1.jpg" alt="">
                                             </span>
                                         <span class="image-selector__item">
                                                 <span class="image-selector__item-nav"></span>
-                                                <img class="lazy" data-src="/css/img/p1.2.jpg" data-srcset="/img/p1.2.jpg" alt="">
+                                                <img class="lazy" data-src="/img/p1.2.jpg" data-srcset="/img/p1.2.jpg" alt="">
                                             </span>
                                         <span class="image-selector__item">
                                                 <span class="image-selector__item-nav"></span>
-                                                <img class="lazy" data-src="/css/img/p1.3.jpg" data-srcset="/img/p1.3.jpg" alt="">
+                                                <img class="lazy" data-src="/img/p1.3.jpg" data-srcset="/img/p1.3.jpg" alt="">
                                             </span>
                                         <span class="image-selector__item">
                                                 <span class="image-selector__item-nav"></span>
-                                                <img class="lazy" data-src="/css/img/p1.4.jpg" data-srcset="/img/p1.4.jpg" alt="">
+                                                <img class="lazy" data-src="/img/p1.4.jpg" data-srcset="/img/p1.4.jpg" alt="">
                                             </span>
                                     </div>
                                 </a>
@@ -796,19 +814,19 @@
                                     <div class="item__image-selector image-selector">
                                             <span class="image-selector__item active">
                                                 <span class="image-selector__item-nav"></span>
-                                                <img class="lazy" data-src="/css/img/p1.1.jpg" data-srcset="/img/p1.1.jpg" alt="">
+                                                <img class="lazy" data-src="/img/p1.1.jpg" data-srcset="/img/p1.1.jpg" alt="">
                                             </span>
                                         <span class="image-selector__item">
                                                 <span class="image-selector__item-nav"></span>
-                                                <img class="lazy" data-src="/css/img/p1.2.jpg" data-srcset="/img/p1.2.jpg" alt="">
+                                                <img class="lazy" data-src="/img/p1.2.jpg" data-srcset="/img/p1.2.jpg" alt="">
                                             </span>
                                         <span class="image-selector__item">
                                                 <span class="image-selector__item-nav"></span>
-                                                <img class="lazy" data-src="/css/img/p1.3.jpg" data-srcset="/img/p1.3.jpg" alt="">
+                                                <img class="lazy" data-src="/img/p1.3.jpg" data-srcset="/img/p1.3.jpg" alt="">
                                             </span>
                                         <span class="image-selector__item">
                                                 <span class="image-selector__item-nav"></span>
-                                                <img class="lazy" data-src="/css/img/p1.4.jpg" data-srcset="/img/p1.4.jpg" alt="">
+                                                <img class="lazy" data-src="/img/p1.4.jpg" data-srcset="/img/p1.4.jpg" alt="">
                                             </span>
                                     </div>
                                 </a>
@@ -865,5 +883,8 @@
 <a class="scroll-to-top" href="#">
     <i class="far fa-arrow-up"></i>
 </a>
+
+
+<?php echo $debugbarRenderer->render() ?>
 
 @include('layout.footer')
